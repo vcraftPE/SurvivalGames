@@ -419,7 +419,7 @@ class GameSender extends PluginTask {
 								{
 									foreach($playersArena as $pl)
 									{
-										$pl->sendMessage($this->prefix . TextFormat::GREEN . "You won!");
+										$p1->sendTip($this->prefix . "You've won an SurvivalGames Match!");
 										$pl->getInventory()->clearAll();
 										$pl->removeAllEffects();
 							                        $p1->getPlugin("EconomyAPI")->addMoney($p1, 1000);
