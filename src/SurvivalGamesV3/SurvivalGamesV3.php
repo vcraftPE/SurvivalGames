@@ -428,7 +428,7 @@ class GameSender extends PluginTask {
 										$this->plugin->getServer()->getDefaultLevel()->loadChunk($spawn->getX(), $spawn->getZ());
 										$pl->teleport($spawn,0,0);
 									}
-									$config->set($arena . "PlayTime", 780);
+									$config->set($arena . "PlayTime", 800);
 									$config->set($arena . "StartTime", 60);
 								}
 								$time--;
@@ -495,7 +495,7 @@ class GameSender extends PluginTask {
 											$pl->sendMessage($this->prefix . "No winner in this round!");
 											$pl->getInventory()->clearAll();
 										}
-										$time = 780;
+										$time = 800;
 									}
 								}
 								$config->set($arena . "PlayTime", $time);
