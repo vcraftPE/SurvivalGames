@@ -225,7 +225,7 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
 				$this->refreshArenas();
 				$this->currentLevel = "";
 				$this->mode = 0;
-				$player->sendMessage($this->prefix . "The arena has been registered successfully!");
+				$player->sendMessage($this->prefix . "The arena has been successfully registered!");
 			}
 			else
 			{
@@ -301,7 +301,7 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
 			$this->mode++;
 			if($this->mode==25)
 			{
-				$player->sendMessage($this->prefix . "Now tap on a deathmatch spawn.");
+				$player->sendMessage($this->prefix . "Now tap on the deathmatch spawn.");
 			}
 			$config->save();
 		}
@@ -311,7 +311,7 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
 			$level = $this->getServer()->getLevelByName($this->currentLevel);
 			$level->setSpawn = (new Vector3($block->getX(),$block->getY()+2,$block->getZ()));
 			$config->set("arenas",$this->arenas);
-			$player->sendMessage($this->prefix . "You've been teleported back. Tap a sign to register it for the arena!");
+			$player->sendMessage($this->prefix . "You've been teleported back. Tap on a sign to register the arena!");
 			$spawn = $this->getServer()->getDefaultLevel()->getSafeSpawn();
 			$this->getServer()->getDefaultLevel()->loadChunk($spawn->getFloorX(), $spawn->getFloorZ());
 			$player->teleport($spawn,0,0);
@@ -326,7 +326,7 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
 		$config->set("arenas",$this->arenas);
 		foreach($this->arenas as $arena)
 		{
-			$config->set($arena . "PlayTime", 780);
+			$config->set($arena . "PlayTime", 800);
 			$config->set($arena . "StartTime", 60);
 		}
 		$config->save();
@@ -392,7 +392,7 @@ class GameSender extends PluginTask {
 					$playersArena = $levelArena->getPlayers();
 					if(count($playersArena)==0)
 					{
-						$config->set($arena . "PlayTime", 780);
+						$config->set($arena . "PlayTime", 800);
 						$config->set($arena . "StartTime", 60);
 					}
 					else
@@ -428,7 +428,7 @@ class GameSender extends PluginTask {
 										$this->plugin->getServer()->getDefaultLevel()->loadChunk($spawn->getX(), $spawn->getZ());
 										$pl->teleport($spawn,0,0);
 									}
-									$config->set($arena . "PlayTime", 780);
+									$config->set($arena . "PlayTime", 800);
 									$config->set($arena . "StartTime", 60);
 								}
 								$time--;
@@ -492,10 +492,10 @@ class GameSender extends PluginTask {
 										foreach($playersArena as $pl)
 										{
 											$pl->teleport($spawn,0,0);
-											$pl->sendMessage($this->prefix . "No winner this time!");
+											$pl->sendMessage($this->prefix . "No winner in this round!");
 											$pl->getInventory()->clearAll();
 										}
-										$time = 780;
+										$time = 800;
 									}
 								}
 								$config->set($arena . "PlayTime", $time);
@@ -512,7 +512,7 @@ class GameSender extends PluginTask {
 									$this->plugin->getServer()->getDefaultLevel()->loadChunk($spawn->getX(), $spawn->getZ());
 									$pl->teleport($spawn);
 								}
-								$config->set($arena . "PlayTime", 780);
+								$config->set($arena . "PlayTime", 800);
 								$config->set($arena . "StartTime", 60);
 							}
 							else
@@ -522,7 +522,7 @@ class GameSender extends PluginTask {
 								$pl->sendTip(TextFormat::RED . "More players needed");
 								
 								}
-								$config->set($arena . "PlayTime", 780);
+								$config->set($arena . "PlayTime", 800);
 								$config->set($arena . "StartTime", 60);
 							}
 						}
