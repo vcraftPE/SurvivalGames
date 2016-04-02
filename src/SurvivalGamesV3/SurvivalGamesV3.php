@@ -36,7 +36,6 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
 	{
         $this->getServer()->getPluginManager()->registerEvents($this ,$this);
 		$this->getLogger()->info(TextFormat::GREEN . "SurvivalGames Loaded!");
-		$this->economy = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
 		@mkdir($this->getDataFolder());
 		$config2 = new Config($this->getDataFolder() . "/rank.yml", Config::YAML);
 		$config2->save();
@@ -59,14 +58,14 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new RefreshSigns($this), 10);
 	}
 	
-	Public function playerDeath($spawn) {
+	public function playerDeath($spawn) {
         $spawn = $this->getServer()->getDefaultLevel()->getSafeSpawn(); 
         $this->getServer()->getDefaultLevel()->loadChunk($spawn->getFloorX(), 
         $spawn->getFloorZ()); $player->teleport($spawn,0,0);
 	}
         
-    public function playerJoin($spawn){
-	    $spawn = $this->getServer()->getDefaultLevel()->getSafeSpawn(); 
+        public function playerJoin($spawn){
+	$spawn = $this->getServer()->getDefaultLevel()->getSafeSpawn(); 
         $this->getServer()->getDefaultLevel()->loadChunk($spawn->getFloorX(), 
         $spawn->getFloorZ()); $player->teleport($spawn,0,0);
 	}
@@ -138,7 +137,7 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
 							                                             $player->sendMessage($this->prefix . "SurvivalGames Commands!");
                                              $player->sendMessage($this->prefix . "/sg create [world] Creates an arena in the specified world!");
                                              $player->sendMessage($this->prefix . "/setrank [rank] [player] sets a players rank!");
-                                             $player->sendMessage($this->prefix . "/ranks shows a list of ranks! <- under dev");	
+                                             $player->sendMessage($this->prefix . "/ranks shows a list of ranks! <- in dev");	
 							}
 						}
 						else
@@ -151,7 +150,7 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
                                              $player->sendMessage($this->prefix . "SurvivalGames Commands!");
                                              $player->sendMessage($this->prefix . "/sg create [world] Creates an arena in the specified world!");
                                              $player->sendMessage($this->prefix . "/setrank [rank] [player] sets a players rank!");
-                                             $player->sendMessage($this->prefix . "/ranks shows a list of ranks! <- under dev");
+                                             $player->sendMessage($this->prefix . "/ranks shows a list of ranks! <- in dev");
 					}
 				}
 			return true;
@@ -243,6 +242,7 @@ class SurvivalGamesV3 extends PluginBase implements Listener {
 						$player->teleport($spawn,0,0);
 						$player->setNameTag($player->getName());
 						$player->getInventory()->clearAll();
+						$player->sendMessage("§7§l[§fS§cG§7] You have Successfully Joined a Match!");
 						$config2 = new Config($this->getDataFolder() . "/rank.yml", Config::YAML);
 						$rank = $config2->get($player->getName());
 						if($rank == "§b[§aVIP§4+§b]")
@@ -404,7 +404,7 @@ class GameSender extends PluginTask {
 								$timeToStart--;
 								foreach($playersArena as $pl)
 								{
-									$pl->sendTip(TextFormat::GOLD . $timeToStart . " seconds");
+									$pl->sendTip(TextFormat::GRAY . "Starting in " . $timeToStart . " Seconds");
 								}
 								if($timeToStart<=0)
 								{
@@ -422,7 +422,6 @@ class GameSender extends PluginTask {
 										$p1->sendTip($this->prefix . "You've won an SurvivalGames Match!");
 										$pl->getInventory()->clearAll();
 										$pl->removeAllEffects();
-							                        $p1->getPlugin("EconomyAPI")->addMoney($p1, 1000);
 										$pl->setNameTag($pl->getName());
 										$spawn = $this->plugin->getServer()->getDefaultLevel()->getSafeSpawn();
 										$this->plugin->getServer()->getDefaultLevel()->loadChunk($spawn->getX(), $spawn->getZ());
@@ -519,7 +518,7 @@ class GameSender extends PluginTask {
 							{
 								foreach($playersArena as $pl)
 								{
-								$pl->sendTip(TextFormat::RED . "More players needed");
+								$pl->sendTip(TextFormat::RED . "A game requires 2 players!");
 								
 								}
 								$config->set($arena . "PlayTime", 800);
